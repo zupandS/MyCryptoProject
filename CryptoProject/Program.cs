@@ -1,3 +1,5 @@
+using CryptoProject.Interfaces;
+using CryptoProject.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CryptoProject
@@ -13,7 +15,7 @@ namespace CryptoProject
 
             var mainWindow = provider.GetRequiredService<Form1>();
 
-            Application.Run(new Form1());
+            Application.Run(mainWindow);
         }
 
         public static ServiceProvider ConfigureServices()
@@ -25,6 +27,9 @@ namespace CryptoProject
             services.AddKucoin();
             services.AddBybit();
             services.AddBitget();
+
+            services.AddScoped<ICryptoService, CryptoService>();
+            services.AddScoped<ICryptoMapService, CryptoMapService>();
 
             return services.BuildServiceProvider();
         }
