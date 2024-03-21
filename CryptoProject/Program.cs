@@ -1,17 +1,32 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace CryptoProject
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+
+            using var provider = ConfigureServices();
+
+            var mainWindow = provider.GetRequiredService<Form1>();
+
             Application.Run(new Form1());
+        }
+
+        public static ServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            services.AddSingleton<Form1>();
+            services.AddBinance();
+            services.AddKucoin();
+            services.AddBybit();
+            services.AddBitget();
+
+            return services.BuildServiceProvider();
         }
     }
 }
