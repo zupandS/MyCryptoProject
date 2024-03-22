@@ -62,9 +62,10 @@ namespace CryptoProject.Services
         {
             var result = await _bybitClient.V5SpotApi.SubscribeToTickerUpdatesAsync(currencyPair.ToString(), data => 
             {
-                OnPriceUpdateBybit += OnPrice;
+                OnPriceUpdateBybit?.Invoke(data.Data.LastPrice);
                 Task.Delay(delay).Wait();
             });
+
             if (result.Success)
                 OnPriceUpdateBybit += OnPrice;
         }
@@ -75,7 +76,7 @@ namespace CryptoProject.Services
 
             var result = await _kucoinClient.SpotApi.SubscribeToTickerUpdatesAsync(symbol, data =>
             {
-                OnPriceUpdateKucoin += OnPrice;
+                OnPriceUpdateKucoin?.Invoke((decimal)data.Data.LastPrice); 
                 Task.Delay(delay).Wait();
             });
 

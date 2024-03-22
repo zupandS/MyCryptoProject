@@ -14,6 +14,8 @@ namespace CryptoProject
 
         private async void Form1_Load(object sender, EventArgs e)
         {
+            dataGridView1.Rows[0].Cells[0].Value = "BTC/USDT";
+
             await _cryptoService.SubscribeGetPriceUpdatesBinanceAsync(
                 CurrencyPair.BTCUSDT,
                 TimeSpan.FromSeconds(5),
@@ -35,24 +37,24 @@ namespace CryptoProject
                 OnBitgetGetPrice);
         }
 
-        private void OnBitgetGetPrice(decimal obj)
+        private void OnBitgetGetPrice(decimal price)
         {
-
+            dataGridView1.Rows[0].Cells[4].Value = price;
         }
 
-        private void OnKucoinGetPrice(decimal obj)
+        private void OnKucoinGetPrice(decimal price)
         {
-
+            dataGridView1.Rows[0].Cells[3].Value = price;
         }
 
-        private void OnBybitGetPrice(decimal obj)
+        private void OnBybitGetPrice(decimal price)
         {
-
+            dataGridView1.Rows[0].Cells[2].Value = price;
         }
 
-        private void OnBinanceGetPrice(decimal obj)
+        private void OnBinanceGetPrice(decimal price)
         {
-
+            dataGridView1.Rows[0].Cells[1].Value = price;
         }
     }
 }
